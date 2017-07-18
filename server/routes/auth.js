@@ -1,11 +1,79 @@
 const express = require('express');
 const middleware = require('../middleware');
+const fs = require('fs');
+const exec = require('child_process').exec;
+// const { spawn } = require('child_process');
+const path = require('path');
+const Sandbox = require('sandbox');
 
 const router = express.Router();
 
+var sandbox = new Sandbox();
+
 router.route('/')
-  .get(middleware.auth.verify, (req, res) => {
+  .get((req, res) => {
     res.render('index.ejs');
+  });
+  // .get(middleware.auth.verify, (req, res) => {
+  //   res.render('index.ejs');
+  // });
+
+router.route('/run')
+  .post((req, res) => {
+    console.log('req body:', req.body);
+    var { code } = req.body;
+    var codeFilePath = path.join(__dirname, 'code.js');
+    var command = ['node', codeFilePath].join(' ');
+    // console.log('Writing to:', codeFilePath);
+    fs.writeFile(codeFilePath, req.body.code, 'utf8', (err) => {
+      if (err) {
+        throw err;
+      }
+      var evaluate = new Promise(function (resolve, reject) {
+        // spawn(command, {
+
+        // });
+        // sandbox execution
+        
+        // raw execution
+        var options = {
+        };
+        exec(command, options, function (err, stdout, stderr) {
+          console.log('Running command:', command);
+          if (err) {
+            console.log('I has error...');
+          }
+          console.log('Error:', err, 'Stderr:', stderr.toString());
+          console.log('Stdout:', stdout.toString().split('\n'));
+          var logs = stdout.toString().split('\n');
+          var verboseError = stderr.toString();
+          // resolve({data: stdout.toString(), error: stderr.toString()});
+          sandbox.run(code, output => {
+            console.log('Sandbox output:', output);
+            output = {
+              result: output.result,
+              logs: logs,
+              error: err,
+              longError: verboseError
+
+            };
+            resolve(output);
+          });
+
+        });
+      })
+      .then(output => {
+        console.log('Output:', output);
+        res.send(output);
+      })
+      .catch(err => {
+        if (err) {
+          console.log('Thrown error: ', err);
+        }
+        res.status(404).send('Bleh');
+      });
+
+    });
   });
 
 router.route('/login')
