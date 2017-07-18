@@ -1,0 +1,44 @@
+/* TAGS */
+body, html {
+  height: 100%;
+}
+
+.container, .view, #root {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.playground {
+  margin: 0;
+  background-color: red;
+  float: left;
+}
+
+.CodeMirror, .Terminal, .playground {
+  height: 100%;
+}
+
+.Terminal, .playground {
+  width: 50%;
+}
+
+.CodeMirror {
+  width: 100%;
+}
+
+.Terminal {
+  color: white;
+  float: right;
+  background-color: yellow;
+}
+
+.Terminal > * {
+  height: 100%;
+}
+
+.run {
+  position: absolute;
+  z-index: 999;
+  bottom: 0;
+}
