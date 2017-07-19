@@ -4,21 +4,27 @@ import { Playground } from './Playground/index.jsx';
 import { Terminal } from './Playground/index.jsx';
 import { Twilio } from './Playground/index.jsx';
 import xTerm from 'xterm';
+import io from 'socket.io-client';
 
 class View extends Component {
 
   constructor(props) {
     super(props);
+    var socket = io();
 
     this.state = {
       terminal: undefined,
+      socket: socket,
+      editorCode: 'function myScript() {\n\treturn 100;\n}\nconsole.log(myScript());'
     };
+    
     xTerm.loadAddon('fit');
     this.handleRunClick = this.handleRunClick.bind(this);
     this.handleClearClick = this.handleClearClick.bind(this);
   }
 
   componentDidMount () {
+
     var options = {
       cursorBlink: true,
       tabStopWidth: 4
@@ -29,14 +35,34 @@ class View extends Component {
       term.open(document.getElementById('terminal'));
       term.fit();
       term.blur();
-    });
 
+      this.state.socket.on('executed_code', (output) => {
+        this.writeTerminal(output);
+      });
+
+    });
+    
   }
 
   handleClearClick () {
     this.state.terminal.clear();
   }
 
+    
+  writeTerminal (output) {
+    var {result, logs, error, longError} = output;
+
+    if (logs.length > 1) {
+      this.state.terminal.writeln(logs.join(''));
+    } else {
+      this.state.terminal.writeln(logs.join('\n'));
+    }
+    
+    if (error) {
+      this.state.terminal.writeln(result); // when there's an error, result will become a error message
+    }
+
+  }
   
   handleRunClick () {
     // Colorizing feature
@@ -51,10 +77,12 @@ class View extends Component {
     var payload = {
       code: code
     };
+
+    // Socket io emit
     payload = JSON.stringify(payload);
 
     var headers = new Headers({
-      "Content-Type": 'application/json'
+      'Content-Type': 'application/json' 
     });
     
     var options = {
@@ -69,20 +97,10 @@ class View extends Component {
         .then(output => {
           output = JSON.parse(output);
           console.log('Response from server:', output, typeof output);
-          var {result, logs, error, longError} = output;
 
-          if (logs.length > 1) {
-            this.state.terminal.writeln(logs.join(''));
-          } else {
-            this.state.terminal.writeln(logs.join('\n'));
-          }
+          this.state.socket.emit('executed_code', output); 
+          this.writeTerminal(output);
           
-          if (error) {
-            console.log('Error!');
-
-            this.state.terminal.writeln(result);
-          }
-
         });
       })
       .catch(function(error) {
@@ -94,7 +112,7 @@ class View extends Component {
     console.log('Playground:', Playground);
     return (
       <div className="view">
-        <Playground handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick}/>
+        <Playground handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick} editorCode={this.state.editorCode} socket={this.state.socket}/>
          <div className="Terminal" id="terminal"></div>        
       </div>
     );

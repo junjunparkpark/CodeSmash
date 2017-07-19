@@ -2,7 +2,6 @@ const express = require('express');
 const middleware = require('../middleware');
 const fs = require('fs');
 const exec = require('child_process').exec;
-// const { spawn } = require('child_process');
 const path = require('path');
 const Sandbox = require('sandbox');
 
@@ -30,26 +29,20 @@ router.route('/run')
         throw err;
       }
       var evaluate = new Promise(function (resolve, reject) {
-        // spawn(command, {
-
-        // });
-        // sandbox execution
-        
-        // raw execution
         var options = {
         };
         exec(command, options, function (err, stdout, stderr) {
-          console.log('Running command:', command);
+          // console.log('Running command:', command);
           if (err) {
             console.log('I has error...');
           }
-          console.log('Error:', err, 'Stderr:', stderr.toString());
-          console.log('Stdout:', stdout.toString().split('\n'));
+          // console.log('Error:', err, 'Stderr:', stderr.toString());
+          // console.log('Stdout:', stdout.toString().split('\n'));
           var logs = stdout.toString().split('\n');
           var verboseError = stderr.toString();
           // resolve({data: stdout.toString(), error: stderr.toString()});
           sandbox.run(code, output => {
-            console.log('Sandbox output:', output);
+            // console.log('Sandbox output:', output);
             output = {
               result: output.result,
               logs: logs,
