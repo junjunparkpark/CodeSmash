@@ -82,7 +82,7 @@ class View extends Component {
     payload = JSON.stringify(payload);
 
     var headers = new Headers({
-      "Content-Type": 'application/json'
+      'Content-Type': 'application/json' 
     });
     
     var options = {

@@ -32,17 +32,9 @@ class Playground extends Component {
       this.props.socket.emit('changed_code', codeMirror.getValue());
       cm.save(); // saves editor's value to textarea value
     });
-    console.log('Mirror:', document.getElementsByClassName('CodeMirror'));
-    document.getElementsByClassName('CodeMirror')[0].addEventListener('keypress', _ => {
-      console.log('pressed a key on codemirror!');
-      
-    });
+
     this.props.socket.on('changed_code', (code) => {
       codeMirror.setValue(code);
-      // codeMirror.on('change', (cm, change) => {
-      //   this.props.socket.emit('changed_code', code);
-      //   cm.save(); // saves editor's value to textarea value
-      // });
     });
   }
 
@@ -53,7 +45,7 @@ class Playground extends Component {
         <div className="buttons">
           <button onClick={ _ => {
             this.handleRunClick();
-            }} 
+          }} 
             className="run"
           >
           Run
