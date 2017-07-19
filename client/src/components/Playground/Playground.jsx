@@ -8,6 +8,7 @@ class Playground extends Component {
     super(props);
 
     this.handleRunClick = props.handleRunClick.bind(this);
+    this.handleClearClick = props.handleClearClick.bind(this);
   }
 
   componentDidMount () {
@@ -36,7 +37,10 @@ class Playground extends Component {
    
     return (
       <div className="playground">
-        <button onClick={this.handleRunClick} className="run">Run</button>  
+        <div className="buttons">
+          <button onClick={this.handleRunClick} className="run">Run</button>  
+          <button onClick={this.handleClearClick} className="run">Clear</button>  
+        </div>
         <textarea id="code"></textarea>
       </div>
     );
