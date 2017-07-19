@@ -12,7 +12,6 @@ class View extends Component {
 
     this.state = {
       terminal: undefined,
-      line: 1,
     };
     xTerm.loadAddon('fit');
     this.handleRunClick = this.handleRunClick.bind(this);
