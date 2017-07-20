@@ -37,7 +37,13 @@ class View extends Component {
       term.blur();
 
       this.state.socket.on('executed_code', (output) => {
+        console.log('Running code, badoop!');
         this.writeTerminal(output);
+      });
+
+      this.state.socket.on('cleared_terminal', (output) => {
+        console.log('Clearing terminal, Commander!', output);
+        this.state.terminal.clear();
       });
 
     });

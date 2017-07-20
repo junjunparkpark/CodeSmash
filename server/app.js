@@ -45,6 +45,11 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('executed_code', code);
   });
 
+  socket.on('cleared_terminal', function (code) {
+    console.log('Broadcasting cleared code event!', code);
+    socket.broadcast.emit('cleared_terminal');
+  });
+
   socket.on('disconnect', function (code, stdio) {
     console.log('user disconnected...');
   });
