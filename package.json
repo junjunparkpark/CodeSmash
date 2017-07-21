@@ -4,7 +4,8 @@
   "scripts": {
     "start": "node server",
     "test": "NODE_ENV=test grunt test",
-    "build": "webpack --watch"
+    "build": "webpack --watch",
+    "heroku-postbuild": "webpack -p"
   },
   "author": "Jun Park, Matt Reyez, Victor Ngo",
   "license": "MIT",
