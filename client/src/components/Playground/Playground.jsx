@@ -27,15 +27,33 @@ class Playground extends Component {
     textArea.value = defaultString;
     var codeMirror = CodeMirror.fromTextArea(textArea, options);
     codeMirror.setSize('100%', '100%');
-    codeMirror.on('keyup', (cm, change) => {
-      console.log('Change', change);
-      this.props.socket.emit('changed_code', codeMirror.getValue());
-      cm.save(); // saves editor's value to textarea value
+    codeMirror.on('change', (cm, change) => {
+      cm.save();
+      var code = codeMirror.getValue();
+      this.props.socket.emit('changed_code', code);
     });
+    
+    console.log(document.getElementsByClassName('CodeMirror'));
+
+    // document.getElementsByClassName('CodeMirror')[0].addEventListener('change', ({key}) => {
+    //   console.log('key:', key);
+    //   var code = codeMirror.getValue();
+    //   this.props.socket.emit('changed_code', code);
+    // });
+  
+    
 
     this.props.socket.on('changed_code', (code) => {
-      codeMirror.setValue(code);
+      if (codeMirror.getValue() !== code) {
+        codeMirror.setValue(code);
+      }
     });
+    
+  }
+
+  emitClearEvent () {
+    console.log('Emitting clear event!');
+    this.props.socket.emit('cleared_terminal');
   }
 
   render () {
@@ -50,7 +68,13 @@ class Playground extends Component {
           >
           Run
           </button>  
-          <button onClick={this.handleClearClick} className="run">Clear</button>  
+          <button onClick={ _ => {
+            this.handleClearClick();
+            this.emitClearEvent();  
+          }}
+          className="run"
+          >Clear
+          </button>  
         </div>
         <textarea id="code"></textarea>
       </div>
