@@ -5,7 +5,8 @@
     "start": "node server",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
-    "heroku-postbuild": "webpack -p"
+    "heroku-postbuild": "npm run webpack:deploy",
+    "webpack:deploy": "webpack --config=webpack.config.babel.js -p"
   },
   "author": "Jun Park, Matt Reyez, Victor Ngo",
   "license": "MIT",
@@ -45,7 +46,8 @@
     "request": "^2.81.0",
     "sandbox": "^0.8.6",
     "socket.io": "^2.0.3",
-    "xterm": "^2.8.1"
+    "xterm": "^2.8.1",
+    "webpack": "^2.3.2"
   },
   "devDependencies": {
     "babel-loader": "^7.0.0",
@@ -59,7 +61,6 @@
     "mocha": "^3.2.0",
     "node-mocks-http": "^1.6.1",
     "supertest": "^3.0.0",
-    "webpack": "^2.3.2",
     "webpack-dev-server": "^2.4.2"
   },
   "babel": {
