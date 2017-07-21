@@ -30,9 +30,9 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 console.log('Using router to deal with /*  BUT NOT /api endpoint ...');
 // app.use('/', routes.auth);
-app.get('/', (req, res) => res.render('index', {title: 'Hello', message:'Whoo here!'}));
-app.use('/api', routes.api);
-app.use('/api/profiles', routes.profiles);
+app.get('/', (req, res) => { res.send('whoo'); });
+// app.use('/api', routes.api);
+// app.use('/api/profiles', routes.profiles);
 
 // SOCKET IO TENTATIVE CODE
 // http.listen(process.env.port || 3000, function(){
