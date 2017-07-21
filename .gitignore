@@ -42,3 +42,6 @@ yarn.lock
 
 # Ignore code buffer
 server/routes/code.js
+
+
+public/bundle.js

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Playground } from './Playground/index.jsx';
-import { Terminal } from './Playground/index.jsx';
-import { Twilio } from './Playground/index.jsx';
+import { Playground, Terminal, Twilio } from './Playground/index.jsx';
 import xTerm from 'xterm';
 import io from 'socket.io-client';
 
 class View extends Component {
-
   constructor(props) {
     super(props);
     var socket = io();
@@ -100,14 +97,14 @@ class View extends Component {
     fetch('run', options)
       .then((res) => {
         res.text()
-        .then(output => {
-          output = JSON.parse(output);
-          console.log('Response from server:', output, typeof output);
+          .then(output => {
+            output = JSON.parse(output);
+            console.log('Response from server:', output, typeof output);
 
-          this.state.socket.emit('executed_code', output); 
-          this.writeTerminal(output);
-          
-        });
+            this.state.socket.emit('executed_code', output); 
+            this.writeTerminal(output);
+            
+          });
       })
       .catch(function(error) {
         console.error(error);
@@ -119,7 +116,7 @@ class View extends Component {
     return (
       <div className="view">
         <Playground handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick} editorCode={this.state.editorCode} socket={this.state.socket}/>
-         <div className="Terminal" id="terminal"></div>        
+        <div className="Terminal" id="terminal"></div>        
       </div>
     );
   }
