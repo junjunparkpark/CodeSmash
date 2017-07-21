@@ -21,7 +21,6 @@ class View extends Component {
   }
 
   componentDidMount () {
-
     var options = {
       cursorBlink: true,
       tabStopWidth: 4
