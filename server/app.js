@@ -7,8 +7,8 @@ const routes = require('./routes');
 const app = express();
 
 // SOCKET IO TENTATIVE CODE
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
@@ -61,4 +61,4 @@ io.on('connection', function (socket) {
   });
 
 });
-module.exports = http;
+module.exports = server;
