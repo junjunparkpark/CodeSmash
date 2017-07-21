@@ -7,19 +7,19 @@ const routes = require('./routes');
 const app = express();
 
 // SOCKET IO TENTATIVE CODE
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+// const http = require('http').createServer(app);
+// const io = require('socket.io')(http);
 
 // app.use(middleware.morgan('dev'));
 // app.use(middleware.cookieParser());
-console.log('Body parser adding...');
+// console.log('Body parser adding...');
 // app.use(middleware.bodyParser.urlencoded({extended: false}));
-console.log('Body parser JSON...');
-app.use(middleware.bodyParser.json());
-console.log('Adding views...');
-app.set('views', path.join(__dirname, 'views'));
-console.log('Loading view engine...');
-app.set('view engine', 'ejs');
+// console.log('Body parser JSON...');
+// app.use(middleware.bodyParser.json());
+// console.log('Adding views...');
+// app.set('views', path.join(__dirname, 'views'));
+// console.log('Loading view engine...');
+// app.set('view engine', 'ejs');
 
 // app.use(middleware.auth.session);
 // app.use(middleware.passport.initialize());
@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 console.log('Using router to deal with /*  BUT NOT /api endpoint ...');
 // app.use('/', routes.auth);
-app.use('/', (req, res) => res.send('Whoo here!'));
+app.get('/', (req, res) => res.render('index', {title: 'Hello', message:'Whoo here!'}));
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 
@@ -39,17 +39,17 @@ app.use('/api/profiles', routes.profiles);
 //   console.log('listening on *:3000');
 // });
 
-io.on('connection', function (socket) {
-  console.log('a user connected!');
-  socket.on('changed_code', function (code) {
-    console.log('user changed code:', code);
-    socket.broadcast.emit('changed_code', code);
-  });
+// io.on('connection', function (socket) {
+//   console.log('a user connected!');
+//   socket.on('changed_code', function (code) {
+//     console.log('user changed code:', code);
+//     socket.broadcast.emit('changed_code', code);
+//   });
 
-  socket.on('executed_code', function (code) {
-    console.log('Executed code:', code);
-    socket.broadcast.emit('executed_code', code);
-  });
+//   socket.on('executed_code', function (code) {
+//     console.log('Executed code:', code);
+//     socket.broadcast.emit('executed_code', code);
+//   });
 
   socket.on('cleared_terminal', function (code) {
     console.log('Broadcasting cleared code event!', code);
@@ -60,5 +60,5 @@ io.on('connection', function (socket) {
     console.log('user disconnected...');
   });
 
-});
-module.exports = http;
+// });
+module.exports = app;
