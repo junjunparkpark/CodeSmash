@@ -12,9 +12,13 @@ const io = require('socket.io')(http);
 
 // app.use(middleware.morgan('dev'));
 // app.use(middleware.cookieParser());
-app.use(middleware.bodyParser.urlencoded({extended: false}));
+console.log('Body parser adding...');
+// app.use(middleware.bodyParser.urlencoded({extended: false}));
+console.log('Body parser JSON...');
 app.use(middleware.bodyParser.json());
+console.log('Adding views...');
 app.set('views', path.join(__dirname, 'views'));
+console.log('Loading view engine...');
 app.set('view engine', 'ejs');
 
 // app.use(middleware.auth.session);
@@ -24,7 +28,9 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.use('/', routes.auth);
+console.log('Using router to deal with /*  BUT NOT /api endpoint ...');
+// app.use('/', routes.auth);
+app.use('/', (req, res) => res.send('Whoo here!'));
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 

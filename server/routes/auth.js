@@ -9,14 +9,17 @@ const router = express.Router();
 
 var sandbox = new Sandbox();
 
+console.log('Router dealing with / endpoint...');
 router.route('/')
   .get((req, res) => {
+    console.log('/ route accessed!', 'rendering it to user?');
     res.render('index.ejs');
   });
   // .get(middleware.auth.verify, (req, res) => {
   //   res.render('index.ejs');
   // });
 
+console.log('Router dealing with /run endpoint...');
 router.route('/run')
   .post((req, res) => {
     console.log('req body:', req.body);
