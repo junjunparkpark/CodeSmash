@@ -8,7 +8,11 @@ const app = express();
 
 // SOCKET IO TENTATIVE CODE
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')();
+
+io.attach(server, {
+  port: 80
+});
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
@@ -40,7 +44,10 @@ app.use('/api/profiles', routes.profiles);
 // });
 
 io.on('connection', function (socket) {
-  console.log('a user connected!');
+  console.log('a user connected. Client id:', socket.id);
+  console.log('Connecto to room numba', socket.rooms);
+  console.log('Handshake details', JSON.stringify(socket.handshake));
+
   socket.on('changed_code', function (code) {
     console.log('user changed code:', code);
     socket.broadcast.emit('changed_code', code);
@@ -58,6 +65,10 @@ io.on('connection', function (socket) {
 
   socket.on('disconnect', function (code, stdio) {
     console.log('user disconnected...');
+  });
+
+  socket.on('error', function (error) {
+    console.error('Error: ', error);
   });
 
   
