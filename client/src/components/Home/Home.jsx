@@ -14,7 +14,7 @@ class Home extends Component {
         <Navbar/>
         <h1> Hello World</h1>
       </div>
-    )
+    );
   }
 }
 

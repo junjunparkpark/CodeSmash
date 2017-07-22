@@ -26,9 +26,9 @@ const routes = [
     component: Dashboard,
   },
   { path: '/pricing',
-    component: Dashboard,
+    component: Pricing,
   }
-]
+];
 
 module.exports = (
   <BrowserRouter history={ browserHistory }>

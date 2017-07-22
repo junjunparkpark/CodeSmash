@@ -13,7 +13,7 @@ class Pricing extends React.Component {
           Pricing!
         </h1>
       </div>
-    )
+    );
   }
 }
 
