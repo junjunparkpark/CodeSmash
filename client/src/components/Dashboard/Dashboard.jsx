@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Navbar from '../Routes/Navbar.jsx';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
+        <Navbar/>
         <h1>
           Dashboard!
         </h1>

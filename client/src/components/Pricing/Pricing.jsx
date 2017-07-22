@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Navbar from '../Routes/Navbar.jsx';
 
 class Pricing extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Pricing extends React.Component {
   render() {
     return (
       <div>
+        <Navbar/>
         <h1>
           Pricing!
         </h1>

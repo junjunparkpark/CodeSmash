@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from '../Routes/NavBar.jsx';
+import Navbar from '../Routes/Navbar.jsx';
 
 class Home extends Component {
   constructor(props) {
