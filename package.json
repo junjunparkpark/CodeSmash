@@ -27,7 +27,6 @@
     "express": "^4.15.2",
     "express-session": "^1.15.1",
     "forever-agent": "^0.6.1",
-    "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "knex": "^0.12.9",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
