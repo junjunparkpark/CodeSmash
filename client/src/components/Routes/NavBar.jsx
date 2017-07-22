@@ -8,8 +8,8 @@ module.exports = () => (
         <Link to='/'><a className="navbar-brand">CodeSmash</a></Link>
       </div>
       <Link to='/in'><button className="btn btn-danger navbar-btn">Code Now</button></Link>
-      <ul className='nav navbar-nav'>
-        <li className='active'><Link to='/'>Home</Link></li>
+      <ul className='nav navbar-nav navbar-right'>
+        <li><Link to='/'>Home</Link></li>
         <li><Link to='/dashboard'>Dashboard</Link></li>
         <li><Link to='/pricing'>Pricing</Link></li>
       </ul>
