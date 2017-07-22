@@ -7,7 +7,9 @@ import io from 'socket.io-client';
 class View extends Component {
   constructor(props) {
     super(props);
-    var socket = io(); // how to specify port number?
+    var socket = new io({
+      transports: ['websocket']
+    }); // how to specify port number?
 
     this.state = {
       terminal: undefined,
@@ -124,7 +126,6 @@ class View extends Component {
   }
 
   render () {
-    console.log('Playground:', Playground);
     return (
       <div className="view">
         <Playground handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick} editorCode={this.state.editorCode} socket={this.state.socket}/>

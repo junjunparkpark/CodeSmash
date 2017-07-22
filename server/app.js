@@ -10,9 +10,9 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')();
 
-io.attach(server, {
-  port: 80
-});
+
+io.attach(server);
+io.set('transports', ['websocket']);
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());

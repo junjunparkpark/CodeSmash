@@ -12,8 +12,6 @@ class Playground extends Component {
   }
 
   componentDidMount () {
-    console.log('Playground mounted...');  
-    console.log('Code mirror loading...');
     var textArea = document.getElementById('code');
     var defaultString = this.props.editorCode;
     var options = {
