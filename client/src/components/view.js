@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 class View extends Component {
   constructor(props) {
     super(props);
-    var socket = io();
+    var socket = io(); // how to specify port number?
 
     this.state = {
       terminal: undefined,
@@ -40,6 +40,19 @@ class View extends Component {
       this.state.socket.on('cleared_terminal', (output) => {
         console.log('Clearing terminal, Commander!', output);
         this.state.terminal.clear();
+      });
+      
+      this.state.socket.on('connect', () => {
+        console.log('Connected to socket. Id:', this.state.socket.id);
+      });
+
+          // Error handling
+      this.state.socket.on('error', function (error) {
+        console.log('Error', error);
+      });
+
+      this.state.socket.on('connect_error', (error) => {
+        console.log('Connection error:', error);
       });
 
     });
