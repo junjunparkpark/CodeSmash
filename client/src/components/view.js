@@ -128,6 +128,8 @@ class View extends Component {
   render () {
     return (
       <div className="view">
+        <video id="localVideo" width="320" height="240" controls></video>
+        <div id="remotesVideos"></div>      
         <Playground handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick} editorCode={this.state.editorCode} socket={this.state.socket}/>
         <div className="Terminal" id="terminal"></div>        
       </div>
