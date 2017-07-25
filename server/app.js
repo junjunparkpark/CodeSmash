@@ -10,6 +10,10 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')();
 
+const mongoose = require('mongoose');
+const Users = require('../db/models/users.js');
+
+
 
 io.attach(server);
 io.set('transports', ['websocket']);
@@ -21,7 +25,6 @@ app.use(middleware.bodyParser.urlencoded({extended: false}));
 app.use(middleware.bodyParser.json());
 
 app.set('views', path.join(__dirname, 'views'));
-console.log('Loading view engine...');
 app.set('view engine', 'ejs');
 
 app.use(middleware.auth.session);
@@ -31,14 +34,17 @@ app.use(middleware.flash());
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+
+
+
 app.use('/', routes.auth);
 app.use('/api', routes.api);
-app.use('/api/profiles', routes.profiles);
+// app.use('/api/profiles', routes.profiles);
 
 io.on('connection', function (socket) {
-  console.log('a user connected. Client id:', socket.id);
-  console.log('Connecto to room numba', socket.rooms);
-  console.log('Handshake details', JSON.stringify(socket.handshake));
+// console.log('a user connected. Client id:', socket.id);
+// console.log('Connecto to room numba', socket.rooms);
+// console.log('Handshake details', JSON.stringify(socket.handshake));
 
   socket.on('changed_code', function (code) {
     console.log('user changed code:', code);
