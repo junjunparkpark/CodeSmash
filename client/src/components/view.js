@@ -7,12 +7,14 @@ import io from 'socket.io-client';
 class View extends Component {
   constructor(props) {
     super(props);
-    var socket = io();
+    var socket = new io({
+      transports: ['websocket']
+    }); // how to specify port number?
 
     this.state = {
       terminal: undefined,
       socket: socket,
-      editorCode: 'function myScript() {\n\treturn 100;\n}\nconsole.log(myScript());'
+      editorCode: `function myScript() {\n\tconsole.log('Returning 100');\n\treturn 100;\n}\nconsole.log(myScript());\n`
     };
     
     xTerm.loadAddon('fit');
@@ -21,7 +23,6 @@ class View extends Component {
   }
 
   componentDidMount () {
-
     var options = {
       cursorBlink: true,
       tabStopWidth: 4
@@ -41,6 +42,19 @@ class View extends Component {
       this.state.socket.on('cleared_terminal', (output) => {
         console.log('Clearing terminal, Commander!', output);
         this.state.terminal.clear();
+      });
+      
+      this.state.socket.on('connect', () => {
+        console.log('Connected to socket. Id:', this.state.socket.id);
+      });
+
+          // Error handling
+      this.state.socket.on('error', function (error) {
+        console.log('Error', error);
+      });
+
+      this.state.socket.on('connect_error', (error) => {
+        console.log('Connection error:', error);
       });
 
     });
@@ -68,13 +82,6 @@ class View extends Component {
   }
   
   handleRunClick () {
-    // Colorizing feature
-    // let colorNode = function (node, color, cb) {
-    //   node.style.color = color;
-    //   if (cb) {
-    //     cb();
-    //   }
-    // }
     
     let code = document.getElementById('code').value;
     var payload = {
@@ -112,9 +119,10 @@ class View extends Component {
   }
 
   render () {
-    console.log('Playground:', Playground);
     return (
       <div className="view">
+        <video id="localVideo" width="320" height="240" controls></video>
+        <div id="remotesVideos"></div>      
         <Playground handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick} editorCode={this.state.editorCode} socket={this.state.socket}/>
         <div className="Terminal" id="terminal"></div>        
       </div>

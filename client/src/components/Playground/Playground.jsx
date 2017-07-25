@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import CodeMirror from 'codemirror';
+import colorize from '../../../../node_modules/codemirror/addon/runmode/colorize.js';
+import javascript from '../../../../node_modules/codemirror/mode/javascript/javascript.js';
 // import requestt from 'request';
 
 class Playground extends Component {
@@ -12,16 +14,18 @@ class Playground extends Component {
   }
 
   componentDidMount () {
-    console.log('Playground mounted...');  
-    console.log('Code mirror loading...');
     var textArea = document.getElementById('code');
     var defaultString = this.props.editorCode;
     var options = {
-      // indentUnit: 2,
+      indentUnit: 2,
       lineNumbers: true,
-      mode: 'javascript',
-      theme: 'night',
+      lineWrapping: true,
+      theme: 'monokai-sublime',
       autofocus: true,
+      mode: {
+        name: 'javascript',
+        json: true
+      }
       // viewportMargin: Infinity
     };
     textArea.value = defaultString;

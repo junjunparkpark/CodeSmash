@@ -7,14 +7,21 @@ const routes = require('./routes');
 const app = express();
 
 // SOCKET IO TENTATIVE CODE
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const server = require('http').createServer(app);
+const io = require('socket.io')();
+
+
+io.attach(server);
+io.set('transports', ['websocket']);
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
+
 app.use(middleware.bodyParser.urlencoded({extended: false}));
 app.use(middleware.bodyParser.json());
+
 app.set('views', path.join(__dirname, 'views'));
+console.log('Loading view engine...');
 app.set('view engine', 'ejs');
 
 app.use(middleware.auth.session);
@@ -28,13 +35,11 @@ app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 
-// SOCKET IO TENTATIVE CODE
-// http.listen(process.env.port || 3000, function(){
-//   console.log('listening on *:3000');
-// });
-
 io.on('connection', function (socket) {
-  console.log('a user connected!');
+  console.log('a user connected. Client id:', socket.id);
+  console.log('Connecto to room numba', socket.rooms);
+  console.log('Handshake details', JSON.stringify(socket.handshake));
+
   socket.on('changed_code', function (code) {
     console.log('user changed code:', code);
     socket.broadcast.emit('changed_code', code);
@@ -54,5 +59,12 @@ io.on('connection', function (socket) {
     console.log('user disconnected...');
   });
 
+  socket.on('error', function (error) {
+    console.error('Error: ', error);
+  });
+
+  
+
+
 });
-module.exports = http;
+module.exports = server;
