@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Playground, Terminal, Twilio } from './Playground/index.jsx';
 import xTerm from 'xterm';
 import io from 'socket.io-client';
+import axios from 'axios';
 
 class View extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class View extends Component {
         console.log('Connected to socket. Id:', this.state.socket.id);
       });
 
-          // Error handling
+      // Error handling
       this.state.socket.on('error', function (error) {
         console.log('Error', error);
       });
@@ -116,6 +117,12 @@ class View extends Component {
       .catch(function(error) {
         console.error(error);
       });
+    
+    this.saveCodeSnippet();
+  }
+
+  saveCodeSnippet() {
+    this.state.editorCode;
   }
 
   render () {
