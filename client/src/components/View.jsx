@@ -21,6 +21,7 @@ class View extends Component {
     xTerm.loadAddon('fit');
     this.handleRunClick = this.handleRunClick.bind(this);
     this.handleClearClick = this.handleClearClick.bind(this);
+    this.saveCodeSnippet = this.saveCodeSnippet.bind(this);
   }
 
   componentDidMount () {
@@ -118,14 +119,39 @@ class View extends Component {
         console.error(error);
       });
     
-    this.saveCodeSnippet();
   }
 
   saveCodeSnippet() {
-    let userCode = {
-      code: this.state.editorCode
+    var dummyData = {
+      'id': '5',
+      'email': 'junjunparkpark@gmail.com',
+      'hash': 'lniuisfdb872378yw',
+      'image_url': 'http://www.google.com/jnsdkjfnks/',
+      'url': 'http://linkedin.com/in/junjunparkpark',
+      'first_name': 'Jun',
+      'last_name': 'Park',
+      'company': 'Hack Reactor',
+      'title': 'Student',
+      'location': {
+        'city': 'San Francisco',
+        'state': 'CA'
+      },
+      'interviews': [
+        {
+          'start_time': '06:30',
+          'room_url': 'jln9327rh9',
+          'interviewee': 'Matt',
+          'code': [
+            {
+              'time': '07:00',
+              'code_snippet': JSON.stringify(this.state.editorCode)
+            }
+          ]
+        }
+      ]
     };
-    axios.post('/api/users', userCode)
+    
+    axios.post('/api/users', dummyData)
       .then(res => {
         console.log('Successful POST for User', res.data);
         this.fetch();
@@ -151,7 +177,7 @@ class View extends Component {
       <div className="view">
         <video id="localVideo" width="320" height="240" controls></video>
         <div id="remotesVideos"></div>      
-        <Playground handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick} editorCode={this.state.editorCode} socket={this.state.socket}/>
+        <Playground saveCodeSnippet={this.saveCodeSnippet} handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick} editorCode={this.state.editorCode} socket={this.state.socket}/>
         <div className="Terminal" id="terminal"></div>        
       </div>
     );

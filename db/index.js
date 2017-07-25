@@ -45,9 +45,9 @@ var userSchema = mongoose.Schema(
 
 var User = mongoose.model('User', userSchema);
 
-var selectAll = function(callback) {
-  User.find({}, function(err, items) {
-    if(err) {
+var selectAll = (callback) => {
+  User.find({}, (err, users) => {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, items);

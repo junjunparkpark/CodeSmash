@@ -9,6 +9,7 @@ class Playground extends Component {
   constructor (props) {
     super(props);
 
+    this.saveCodeSnippet = props.saveCodeSnippet;
     this.handleRunClick = props.handleRunClick;
     this.handleClearClick = props.handleClearClick;
   }
@@ -68,7 +69,7 @@ class Playground extends Component {
           <button onClick={ _ => {
             this.handleRunClick();
           }} 
-            className="run"
+          className="run"
           >
           Run
           </button>  
@@ -79,6 +80,13 @@ class Playground extends Component {
           className="run"
           >Clear
           </button>  
+
+          <button onClick={ _ => {
+            this.saveCodeSnippet();
+          }}
+          className="run"
+          >Save 
+          </button>
         </div>
         <textarea id="code"></textarea>
       </div>
