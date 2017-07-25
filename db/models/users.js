@@ -40,7 +40,7 @@ var selectAll = (callback) => {
     if (err) {
       callback(err, null);
     } else {
-      callback(null, items);
+      callback(null, users);
     }
   });
 };

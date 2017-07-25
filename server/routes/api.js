@@ -17,7 +17,13 @@ router.route('/')
 
 router.route('/users') 
   .get((req, res) => {
-    res.status(200).send('Hello World');
+    Users.selectAll((err, data) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        res.status(200).json(data);
+      }
+    });
   })
   .post((req, res) => {
   // Temporary to refresh the database with every POST
