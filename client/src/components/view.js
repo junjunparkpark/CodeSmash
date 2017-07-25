@@ -14,7 +14,7 @@ class View extends Component {
     this.state = {
       terminal: undefined,
       socket: socket,
-      editorCode: 'function myScript() {\n\treturn 100;\n}\nconsole.log(myScript());'
+      editorCode: `function myScript() {\n\tconsole.log('Returning 100');\n\treturn 100;\n}\nconsole.log(myScript());\n`
     };
     
     xTerm.loadAddon('fit');
