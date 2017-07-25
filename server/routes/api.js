@@ -17,7 +17,12 @@ router.route('/api/:users')
     res.status(200).send(Users.selectAll());
   })
   .post((req, res) => {
+    // Temporary to refresh the database with every POST
+    Users.collection.drop();
     console.log('POSTing to Users');
+    Users.create(req.body, (err) => {
+      if (err) { res.status(300).send('ERROR POSTING USER', err); } 
+    });
     res.status(201).send({ data: 'POST to Users' });
   });
 
