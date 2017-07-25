@@ -122,8 +122,29 @@ class View extends Component {
   }
 
   saveCodeSnippet() {
-    this.state.editorCode;
+    let userCode = {
+      code: this.state.editorCode
+    };
+    axios.post('/api/users', userCode)
+      .then(res => {
+        console.log('Successful POST for User', res.data);
+        this.fetch();
+      })
+      .catch(err => {
+        console.log('ERROR creating a user:', err);
+      });
   }
+
+  fetch() {
+    axios.get('/api/users')
+      .then(res => {
+        console.log('Successful GET from Users in DB', res);
+      })
+      .catch(err => {
+        console.log('ERROR GETting from the DB', err);
+      });
+  }
+
 
   render () {
     return (
