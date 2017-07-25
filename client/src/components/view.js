@@ -82,13 +82,6 @@ class View extends Component {
   }
   
   handleRunClick () {
-    // Colorizing feature
-    // let colorNode = function (node, color, cb) {
-    //   node.style.color = color;
-    //   if (cb) {
-    //     cb();
-    //   }
-    // }
     
     let code = document.getElementById('code').value;
     var payload = {

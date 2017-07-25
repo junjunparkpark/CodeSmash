@@ -20,7 +20,7 @@ class Playground extends Component {
       indentUnit: 2,
       lineNumbers: true,
       lineWrapping: true,
-      theme: 'night',
+      theme: 'monokai-sublime',
       autofocus: true,
       mode: {
         name: 'javascript',

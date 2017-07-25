@@ -17,6 +17,7 @@
     "body-parser": "^1.17.1",
     "bookshelf": "^0.10.3",
     "child_process": "^1.0.2",
+    "code-mirror-themes": "^1.0.0",
     "codemirror": "^5.27.4",
     "config": "^1.26.1",
     "connect-flash": "^0.1.1",
