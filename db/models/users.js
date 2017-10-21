@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+
 var userSchema = new Schema(
   {
     'id': String,
@@ -44,6 +45,22 @@ var selectAll = (callback) => {
     }
   });
 };
+
+// implement a insertUser function
+var insertUser = (data) => {
+
+}
+
+// Implement a findUser function
+var findUser = (email, callback) => {
+  Users.find({email: email}, (err, user) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(user);
+    }
+  })
+}
 
 module.exports = Users;
 module.exports.selectAll = selectAll;
