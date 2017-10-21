@@ -52,10 +52,10 @@ var insertUser = (data, callback) => {
     if (err) { 
       callback(err);
     } else {
-      callback(res)
+      callback(res);
     }
-  })
-}
+  });
+};
 
 // Implement a findUser function
 var findUser = (email, callback) => {
@@ -65,8 +65,8 @@ var findUser = (email, callback) => {
     } else {
       callback(user);
     }
-  })
-}
+  });
+};
 
 module.exports = Users;
 module.exports.selectAll = selectAll;
