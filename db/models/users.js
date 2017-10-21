@@ -47,8 +47,14 @@ var selectAll = (callback) => {
 };
 
 // implement a insertUser function
-var insertUser = (data) => {
-
+var insertUser = (data, callback) => {
+  Users.create(user, (err, res) => {
+    if (err) { 
+      callback(err);
+    } else {
+      callback(res)
+    }
+  })
 }
 
 // Implement a findUser function
