@@ -2,7 +2,7 @@
   "name": "CodeSmash",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server",
+    "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
     "heroku-postbuild": "npm run webpack:deploy",

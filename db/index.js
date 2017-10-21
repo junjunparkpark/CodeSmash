@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mongo');
+mongoose.connect('mongodb://localhost/codeSmash');
+
 
 const db = mongoose.connection;
 
