@@ -17,7 +17,7 @@ class View extends Component {
       socket: socket,
       editorCode: `function myScript() {\n\tconsole.log('Returning 100');\n\treturn 100;\n}\nconsole.log(myScript());\n`
     };
-    
+
     xTerm.loadAddon('fit');
     this.handleRunClick = this.handleRunClick.bind(this);
     this.handleClearClick = this.handleClearClick.bind(this);
@@ -45,7 +45,7 @@ class View extends Component {
         console.log('Clearing terminal, Commander!', output);
         this.state.terminal.clear();
       });
-      
+
       this.state.socket.on('connect', () => {
         console.log('Connected to socket. Id:', this.state.socket.id);
       });
@@ -60,14 +60,14 @@ class View extends Component {
       });
 
     });
-    
+
   }
 
   handleClearClick () {
     this.state.terminal.clear();
   }
 
-    
+
   writeTerminal (output) {
     var {result, logs, error, longError} = output;
 
@@ -76,15 +76,14 @@ class View extends Component {
     } else {
       this.state.terminal.writeln(logs.join('\n'));
     }
-    
+
     if (error) {
       this.state.terminal.writeln(result); // when there's an error, result will become a error message
     }
 
   }
-  
+
   handleRunClick () {
-    
     let code = document.getElementById('code').value;
     var payload = {
       code: code
@@ -94,15 +93,15 @@ class View extends Component {
     payload = JSON.stringify(payload);
 
     var headers = new Headers({
-      'Content-Type': 'application/json' 
+      'Content-Type': 'application/json'
     });
-    
+
     var options = {
       method: 'POST',
       body: payload,
       headers: headers
     };
-    
+
     fetch('run', options)
       .then((res) => {
         res.text()
@@ -110,15 +109,15 @@ class View extends Component {
             output = JSON.parse(output);
             console.log('Response from server:', output, typeof output);
 
-            this.state.socket.emit('executed_code', output); 
+            this.state.socket.emit('executed_code', output);
             this.writeTerminal(output);
-            
+
           });
       })
       .catch(function(error) {
         console.error(error);
       });
-    
+
   }
 
   saveCodeSnippet() {
@@ -150,7 +149,7 @@ class View extends Component {
         }
       ]
     };
-    
+
     axios.post('/api/users', dummyData)
       .then(res => {
         console.log('Successful POST for User', res.data);
@@ -176,9 +175,9 @@ class View extends Component {
     return (
       <div className="view">
         <video id="localVideo" width="320" height="240" controls></video>
-        <div id="remotesVideos"></div>      
+        <div id="remotesVideos"></div>
         <Playground saveCodeSnippet={this.saveCodeSnippet} handleRunClick={this.handleRunClick} handleClearClick={this.handleClearClick} editorCode={this.state.editorCode} socket={this.state.socket}/>
-        <div className="Terminal" id="terminal"></div>        
+        <div className="Terminal" id="terminal"></div>
       </div>
     );
   }
