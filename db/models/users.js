@@ -49,7 +49,7 @@ var selectAll = (callback) => {
 // implement a insertUser function
 var insertUser = (data, callback) => {
   Users.create(user, (err, res) => {
-    if (err) { 
+    if (err) {
       callback(err);
     } else {
       callback(res);
@@ -70,3 +70,5 @@ var findUser = (email, callback) => {
 
 module.exports = Users;
 module.exports.selectAll = selectAll;
+module.exports.insertUser = insertUser;
+module.exports.findUser = findUser;
