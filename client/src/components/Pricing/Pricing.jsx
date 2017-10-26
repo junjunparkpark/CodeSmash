@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Routes/Navbar.jsx';
 
-class Dashboard extends React.Component {
+class Pricing extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
   render() {
@@ -13,11 +12,11 @@ class Dashboard extends React.Component {
       <div>
         <Navbar/>
         <h1>
-          Dashboard!
+          Pricing!
         </h1>
       </div>
     );
   }
 }
 
-export default Dashboard;
+export default Pricing;
